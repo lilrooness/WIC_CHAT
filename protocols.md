@@ -7,7 +7,10 @@
  * 5 - User has logged in
  * 6 - User has logged out
 
-##[0] Request log-in
+c - s "Client to Server Messege"
+s - c "Server to Client Messege"
+
+##[0] Request log-in c - s
 <pre>
 {
 	"protocol": 0,
@@ -18,7 +21,7 @@
 }
 </pre>
 
-##[1] Confirm log-in
+##[1] Confirm log-in s - c
 <pre>
 {
 	"protocol": 1,
@@ -33,7 +36,7 @@
 }
 </pre>
 
-##[2] Error
+##[2] Error s - c
 <pre>
 {
 	"protocol": 2,
@@ -44,7 +47,7 @@
 }
 </pre>
 
-##[3] Send a message
+##[3] Send a message c - s
 <pre>
 {
 	"protocol": 3,
@@ -56,7 +59,7 @@
 }
 </pre>
 
-##[4] Send a message
+##[4] Receive a message s - c
 <pre>
 {
 	"protocol": 4,
@@ -68,7 +71,7 @@
 }
 </pre>
 
-##[5] User log-in
+##[5] User log-in s - c
 <pre>
 {
 	"protocol": 5,
@@ -79,7 +82,7 @@
 }
 </pre>
 
-##[6] User log-out
+##[6] User log-out s - c
 <pre>
 {
 	"protocol": 6,
