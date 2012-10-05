@@ -1,6 +1,6 @@
-#usr/bin/env python
+#!/usr/bin/env python
 
-import socket, threading, sys
+import socket, threading, sys, json
 
 class Server(threading.Thread):
 	def __init__ (self, (socket, address)):
@@ -28,8 +28,14 @@ class Server(threading.Thread):
 		lock.acquire()
 		clients.remove(self)
 		lock.release()
-		
-
+	
+	
+	def to_json_string(diction):
+		return json.dumps(diction)
+	
+	def from_json_string(string):
+		return json.loads(string)
+	
 
 
 if __name__ == "__main__":
