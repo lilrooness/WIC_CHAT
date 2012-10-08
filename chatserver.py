@@ -12,12 +12,41 @@ def send_users(messege):
 	for client in clients:
 		client.socket.send(messege)
 
+def user_exists(username):
+	for client in clients:
+		if(client.user_data['username'] == username):
+			return True
+	return False
+
+def messege_prot(messege):
+	data = from_json_string(messege)
+	return data['protocol']	
+
+def messege_username(messege):
+	data = from_json_string(messege)
+	return data['username']
+	
+def server_messege(client, messege):
+	client.socket.send("SERVER_MESSEGE> "+messege)
+
+def mass_server_messege(messege):
+	for client in clients:
+		client.socket.send("SERVER_MESSEGE> "+messege)
+
+def disconnect(client, send_messege):
+	lock.acquire()
+	clients.remove(client)
+	lock.release()
+	if send_messege:
+		mass_server_messege(client.user_data['username']+" has disconnected")
+
 class Server(threading.Thread):
 	def __init__ (self, (socket, address)):
 		threading.Thread.__init__(self)
 		self.socket = socket
 		self.address = address
-		
+		self.user_data = {"username":"Server"}
+
 	def run(self):
 		lock.acquire()
 		clients.append(self)
@@ -25,30 +54,32 @@ class Server(threading.Thread):
 		print "Connected to", self.address
 		
 		try:
-			self.user_data = from_json_string(self.socket.recv(1024))
+			temp = from_json_string(self.socket.recv(1024))
+			
+			#if useraname exists send error messege and break connection
+			if user_exists(temp['username']):
+				server_messege(self, "username already in use")
+				disconnect(self, False)
+				return 0
+			self.user_data.clear()
+			self.user_data = temp
 			print self.user_data['username']
-			prompt = "SERVER_MESSEGE> "+self.user_data['username']+" is online\n"
+			mass_server_messege(self.user_data['username']+" is online\n")
 		except ValueError:
 			print "Failed to recieve details from", self.address
-			lock.acquire()
-			clients.remove(self)
-			lock.release()
+			disconnect(self, True)
 			return 0
-			
-		send_users(prompt)
 		
 		while True:
 			messege = self.socket.recv(1024)
-			print messege.strip()
+			print messege
 			if not messege:
 				break
 			send_users(messege)
 		
 		self.socket.close()
 		print "Dissconnected from", self.address
-		lock.acquire()
-		clients.remove(self)
-		lock.release()	
+		disconnect(self, True)
 	
 
 
