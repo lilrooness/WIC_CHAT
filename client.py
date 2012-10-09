@@ -25,7 +25,7 @@ def recv():
 
 
 if __name__ == "__main__":
-	HOST = 'localhost'
+	HOST = '192.168.1.5'
 	PORT = 1234
 	BUFSIZE = 1024
 	ADDR = (HOST, PORT)
@@ -33,7 +33,7 @@ if __name__ == "__main__":
 	tcpCliSock = socket(AF_INET, SOCK_STREAM)
 	tcpCliSock.connect(ADDR)
 	Thread(target=recv).start()
-	tcpCliSock.send('{"username":"joe"}\n')
+	tcpCliSock.send('{"username":"dan"}\n')
 	while True:
 		data = raw_input('>')
 		tcpCliSock.send(data)
