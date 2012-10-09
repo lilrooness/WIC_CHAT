@@ -33,9 +33,8 @@ if __name__ == "__main__":
 	tcpCliSock = socket(AF_INET, SOCK_STREAM)
 	tcpCliSock.connect(ADDR)
 	Thread(target=recv).start()
-	#tcpCliSock.send("{'username':'joe'}\n")
+	tcpCliSock.send('{"username":"joe"}\n')
 	while True:
 		data = raw_input('>')
-		print data
 		tcpCliSock.send(data)
 	

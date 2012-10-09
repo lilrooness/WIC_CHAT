@@ -54,7 +54,7 @@ class Server(threading.Thread):
 		print "Connected to", self.address
 		
 		try:
-			temp = from_json_string(self.socket.recv(1024))
+			temp = from_json_string(self.socket.recv(1024).strip())
 			
 			#if useraname exists send error messege and break connection
 			if user_exists(temp['username']):
