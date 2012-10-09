@@ -26,12 +26,14 @@ def messege_username(messege):
 	data = from_json_string(messege)
 	return data['username']
 	
-def server_messege(client, messege):
-	client.socket.send("SERVER_MESSEGE> "+messege)
+def server_messege(client, message):
+	j = {"message":message, "username":"SERVER"}
+	client.socket.send(to_json_string(j))
 
-def mass_server_messege(messege):
+def mass_server_messege(message):
+	j = {"message":message, "username":"SERVER"}
 	for client in clients:
-		client.socket.send("SERVER_MESSEGE> "+messege)
+		client.socket.send(to_json_string(j))
 
 def disconnect(client, send_messege):
 	lock.acquire()
@@ -71,12 +73,14 @@ class Server(threading.Thread):
 			return 0
 		
 		while True:
-			messege = self.socket.recv(1024)
-			print messege
-			if not messege:
+			try:
+				messege = self.socket.recv(1024)
+				print messege
+				if not messege:
+					break
+				send_users(messege)
+			except Exception:
 				break
-			send_users(messege)
-		
 		self.socket.close()
 		print "Dissconnected from", self.address
 		disconnect(self, True)
