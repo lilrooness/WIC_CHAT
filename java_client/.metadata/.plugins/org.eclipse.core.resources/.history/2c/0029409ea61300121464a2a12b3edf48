@@ -8,7 +8,6 @@ import java.net.UnknownHostException;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -24,7 +23,6 @@ public class Frame extends JFrame {
 	JTextArea convoBox;
 	Client client;
 	JScrollPane scroll;
-	
 	public Frame() throws UnknownHostException, IOException{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(new BorderLayout());
@@ -33,9 +31,8 @@ public class Frame extends JFrame {
 		convoBox = new JTextArea();
 		convoBox.setEditable(false);
 		inputField.addActionListener(new Handler());
-		scroll = new JScrollPane(convoBox);
 		add(inputField, BorderLayout.SOUTH);
-		add(scroll, BorderLayout.CENTER);
+		add(convoBox, BorderLayout.CENTER);
 		
 		this.setVisible(true);
 		

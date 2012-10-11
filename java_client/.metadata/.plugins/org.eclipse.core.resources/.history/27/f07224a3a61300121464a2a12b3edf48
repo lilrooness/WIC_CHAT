@@ -35,7 +35,7 @@ public class Frame extends JFrame {
 		inputField.addActionListener(new Handler());
 		scroll = new JScrollPane(convoBox);
 		add(inputField, BorderLayout.SOUTH);
-		add(scroll, BorderLayout.CENTER);
+		add(convoBox, BorderLayout.CENTER);
 		
 		this.setVisible(true);
 		
