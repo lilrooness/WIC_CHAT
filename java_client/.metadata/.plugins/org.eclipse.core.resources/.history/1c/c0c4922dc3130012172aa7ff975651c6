@@ -1,6 +1,5 @@
 package chat.wic.client;
 
-import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -31,7 +30,7 @@ public class Client{
 	MessageFormatter mf;
 	String username;
 	
-	public Client(Frame parent) throws UnknownHostException, IOException{
+	public Client(String host, int port, Frame parent, String username) throws UnknownHostException, IOException{
 		Scanner sc = new Scanner(new BufferedReader(new FileReader("client.info")));
 		Gson g = new Gson();
 		String information = sc.nextLine();
@@ -39,8 +38,8 @@ public class Client{
 		cl = g.fromJson(information, cl.getClass());
 		this.username = cl.username;
 		mf = new MessageFormatter();
-		this.port = cl.port;
-		this.host = cl.host;
+		this.port = port;
+		this.host = host;
 		this.parent = parent;
 		socket = new Socket(host, port);
 		out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
@@ -72,17 +71,17 @@ public class Client{
 
 		@Override
 		public void run() {
-			try {
-				while((message = in.readLine())!= null){
-						
-						Message messageObject = mf.fromJson(message);
-						if(!(messageObject.username.equals(username))){
-							parent.convoBox.append(messageObject.username+">"+messageObject.message+"\n");
-						}
-				}parent.convoBox.setBackground(Color.RED);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			while(true){
+				try {
+					message = in.readLine();
+					Message messageObject = mf.fromJson(message);
+					if(!(messageObject.username.equals(username))){
+						parent.convoBox.append(messageObject.username+">"+messageObject.message+"\n");
+					}
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		

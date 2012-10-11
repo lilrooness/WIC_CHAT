@@ -1,6 +1,5 @@
 package chat.wic.client;
 
-import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -72,17 +71,17 @@ public class Client{
 
 		@Override
 		public void run() {
-			try {
-				while((message = in.readLine())!= null){
-						
-						Message messageObject = mf.fromJson(message);
-						if(!(messageObject.username.equals(username))){
-							parent.convoBox.append(messageObject.username+">"+messageObject.message+"\n");
-						}
-				}parent.convoBox.setBackground(Color.RED);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			while(true){
+				try {
+					message = in.readLine();
+					Message messageObject = mf.fromJson(message);
+					if(!(messageObject.username.equals(username))){
+						parent.convoBox.append(messageObject.username+">"+messageObject.message+"\n");
+					}
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		

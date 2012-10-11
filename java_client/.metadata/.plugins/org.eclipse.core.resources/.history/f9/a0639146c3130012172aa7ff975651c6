@@ -39,6 +39,12 @@ public class Frame extends JFrame {
 		
 		this.setVisible(true);
 		
+		/**
+		 * gets all connection data from user
+		 */
+		String username = JOptionPane.showInputDialog("Enter Username");
+		String host = JOptionPane.showInputDialog("Enter Host");
+		String port = JOptionPane.showInputDialog("Enter Host Port");
 		client = new Client(this);
 	}
 	
