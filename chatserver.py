@@ -2,6 +2,19 @@
 
 import socket, threading, sys, json
 
+def read_info(filename):
+	try:
+		info = open(filename)
+	except IOError:
+		print "could not find client.info file"
+		sys.exit()
+	
+	string = ""
+	for line in info:
+		string = string + line
+	info.close()
+	return string
+
 def to_json_string(diction):
 	return json.dumps(diction)
 	
@@ -89,8 +102,11 @@ class Server(threading.Thread):
 
 
 if __name__ == "__main__":
+	variables_string = read_info("server.info")
+	variables = from_json_string(variables_string)
 	host = ""
-	port = 1234
+	port = variables['port']
+	print port
 	clients = []
 	usernames = []
 	lock = threading.Lock()
