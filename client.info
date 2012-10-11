@@ -1,5 +1,5 @@
 {
-	"username":"Dan",
-	"host":"localhost",
-	"port":"1234"
+	"username":"CLI_Client",
+	"host":"192.168.1.7",
+	"port":"3412"
 }
