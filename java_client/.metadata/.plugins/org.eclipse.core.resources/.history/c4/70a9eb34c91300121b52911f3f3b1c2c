@@ -29,7 +29,6 @@ public class Frame extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(new BorderLayout());
 		this.setSize(300, 400);
-		this.setTitle("WIC CHAT");
 		inputField = new JTextField();
 		convoBox = new JTextArea();
 		convoBox.setEditable(false);
