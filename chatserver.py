@@ -2,6 +2,12 @@
 
 import socket, threading, sys, json
 
+def get_users():
+	return_val = ""
+	for client in clients:
+		return_val = return_val + client.user_data['username']+"\n"
+	return return_val
+
 def read_info(filename):
 	try:
 		info = open(filename)
@@ -89,11 +95,16 @@ class Server(threading.Thread):
 		while True:
 			try:
 				messege = self.socket.recv(1024)
+				message_info = from_json_string(messege)
+				if message_info['message'] == "/users":
+					server_messege(self, get_users())
 				print messege
 				if not messege:
+					print "disconnecting"
 					break
 				send_users(messege+"\n")
-			except Exception:
+			except Exception, e:
+				print str(e)
 				break
 		self.socket.close()
 		print "Dissconnected from", self.address
