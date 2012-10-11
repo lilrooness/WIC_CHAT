@@ -1,0 +1,61 @@
+package chat.wic.client;
+
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.UnknownHostException;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+/**
+ * Defines a Gui for the client to sit in. The client holds
+ * a reference to the Frame instantiated object so that
+ * it can add messages to the convoBox JTextArea
+ * @author Joe
+ *
+ */
+public class Frame extends JFrame {
+	JTextField inputField;
+	JTextArea convoBox;
+	Client client;
+	
+	public Frame() throws UnknownHostException, IOException{
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLayout(new BorderLayout());
+		this.setSize(300, 400);
+		inputField = new JTextField();
+		convoBox = new JTextArea();
+		convoBox.setEditable(false);
+		inputField.addActionListener(new Handler());
+		add(inputField, BorderLayout.SOUTH);
+		add(convoBox, BorderLayout.CENTER);
+		
+		this.setVisible(true);
+		
+		/**
+		 * gets all connection data from user
+		 */
+		String username = JOptionPane.showInputDialog("Enter Username");
+		String host = JOptionPane.showInputDialog("Enter Host");
+		String port = JOptionPane.showInputDialog("Enter Host Port");
+		client = new Client(host, Integer.parseInt(port), this, username);
+	}
+	
+	private class Handler implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(e.getSource() == inputField){
+				try {
+					client.sendToServer(inputField.getText());
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		}
+	}
+}

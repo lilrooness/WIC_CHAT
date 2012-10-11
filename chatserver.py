@@ -15,7 +15,7 @@ def send_users(messege):
 #checks if username is already in use, True/False
 def user_exists(username):
 	for client in clients:
-		if(client.user_data['username'] == username):
+		if(client.user_data['username'] == username or client.user_data['username'] == "SERVER"):
 			return True
 	return False
 

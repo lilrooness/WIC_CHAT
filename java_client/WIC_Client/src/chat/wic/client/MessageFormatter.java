@@ -2,6 +2,12 @@ package chat.wic.client;
 
 import com.google.gson.*;
 
+/**
+ * Converts Message objects to json strings and
+ * converts json strings to Message objects
+ * @author Joe
+ *
+ */
 public class MessageFormatter {
 	
 	Gson g;

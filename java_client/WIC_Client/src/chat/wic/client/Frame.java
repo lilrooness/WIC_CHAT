@@ -11,6 +11,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+/**
+ * Defines a Gui for the client to sit in. The client holds
+ * a reference to a Frame object so that
+ * it can add messages to the convoBox JTextArea
+ * @author Joe
+ *
+ */
 public class Frame extends JFrame {
 	JTextField inputField;
 	JTextArea convoBox;
@@ -29,6 +36,9 @@ public class Frame extends JFrame {
 		
 		this.setVisible(true);
 		
+		/**
+		 * gets all connection data from user
+		 */
 		String username = JOptionPane.showInputDialog("Enter Username");
 		String host = JOptionPane.showInputDialog("Enter Host");
 		String port = JOptionPane.showInputDialog("Enter Host Port");
