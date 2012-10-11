@@ -12,6 +12,7 @@ def send_users(messege):
 	for client in clients:
 		client.socket.send(messege)
 
+#checks if username is already in use, True/False
 def user_exists(username):
 	for client in clients:
 		if(client.user_data['username'] == username):
@@ -28,19 +29,19 @@ def messege_username(messege):
 	
 def server_messege(client, message):
 	j = {"message":message, "username":"SERVER"}
-	client.socket.send(to_json_string(j))
+	client.socket.send(to_json_string(j)+"\n")
 
 def mass_server_messege(message):
 	j = {"message":message, "username":"SERVER"}
 	for client in clients:
-		client.socket.send(to_json_string(j))
+		client.socket.send(to_json_string(j)+"\n")
 
 def disconnect(client, send_messege):
 	lock.acquire()
 	clients.remove(client)
 	lock.release()
 	if send_messege:
-		mass_server_messege(client.user_data['username']+" has disconnected")
+		mass_server_messege(client.user_data['username']+" has disconnected"+"\n")
 
 class Server(threading.Thread):
 	def __init__ (self, (socket, address)):
@@ -66,7 +67,7 @@ class Server(threading.Thread):
 			self.user_data.clear()
 			self.user_data = temp
 			print self.user_data['username']
-			mass_server_messege(self.user_data['username']+" is online\n")
+			mass_server_messege(self.user_data['username']+" is online")
 		except ValueError:
 			print "Failed to recieve details from", self.address
 			disconnect(self, True)
@@ -78,7 +79,7 @@ class Server(threading.Thread):
 				print messege
 				if not messege:
 					break
-				send_users(messege)
+				send_users(messege+"\n")
 			except Exception:
 				break
 		self.socket.close()
