@@ -57,7 +57,7 @@ public class Client{
 	 * @throws IOException
 	 */
 	public void sendToServer(String message) throws IOException{
-		parent.convoBox.append(username+"> "+message+"\n");
+		parent.convoBox.append(message+"\n");
 		parent.inputField.setText("");
 		out.write(mf.toJson(new Message(username, message)));
 		out.flush();
@@ -78,7 +78,6 @@ public class Client{
 						Message messageObject = mf.fromJson(message);
 						if(!(messageObject.username.equals(username))){
 							parent.convoBox.append(messageObject.username+">"+messageObject.message+"\n");
-							parent.convoBox.setCaretPosition(parent.convoBox.getDocument().getLength());//autoscrolling
 						}
 				}parent.convoBox.setBackground(Color.RED);
 			} catch (IOException e) {

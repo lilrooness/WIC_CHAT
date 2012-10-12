@@ -78,7 +78,7 @@ public class Client{
 						Message messageObject = mf.fromJson(message);
 						if(!(messageObject.username.equals(username))){
 							parent.convoBox.append(messageObject.username+">"+messageObject.message+"\n");
-							parent.convoBox.setCaretPosition(parent.convoBox.getDocument().getLength());//autoscrolling
+							parent.convoBox.setCaretPosition(parent.convoBox.getDocument().getLength());
 						}
 				}parent.convoBox.setBackground(Color.RED);
 			} catch (IOException e) {
