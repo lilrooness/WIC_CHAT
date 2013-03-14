@@ -1,4 +1,4 @@
-#PROTOCOLS
+#PROTOCOLS / SERVICES
  * 0 - Request log-in
  * 1 - Confirm log-in
  * 2 - Error
@@ -13,7 +13,7 @@ s - c "Server to Client Messege"
 ##[0] Request log-in c - s
 <pre>
 {
-	"protocol": 0,
+	"service": 0,
 	"data": {
 		"timestamp": "",
 		"username": ""
@@ -24,7 +24,7 @@ s - c "Server to Client Messege"
 ##[1] Confirm log-in s - c
 <pre>
 {
-	"protocol": 1,
+	"service": 1,
 	"data": {
 		"welcome_msg": "",
 		"userlist": [
@@ -39,7 +39,7 @@ s - c "Server to Client Messege"
 ##[2] Error s - c
 <pre>
 {
-	"protocol": 2,
+	"service": 2,
 	"data": {
 		"timestamp": "",
 		"error_msg": ""
@@ -50,7 +50,7 @@ s - c "Server to Client Messege"
 ##[3] Send a message c - s
 <pre>
 {
-	"protocol": 3,
+	"service": 3,
 	"data": {
 		"timestamp": "",
 		"message_enc": "",
@@ -62,7 +62,7 @@ s - c "Server to Client Messege"
 ##[4] Receive a message s - c
 <pre>
 {
-	"protocol": 4,
+	"service": 4,
 	"data": {
 		"timestamp": "",
 		"message_enc": "",
@@ -74,7 +74,7 @@ s - c "Server to Client Messege"
 ##[5] User log-in s - c
 <pre>
 {
-	"protocol": 5,
+	"service": 5,
 	"data": {
 		"timestamp": "",
 		"username": ""
@@ -85,7 +85,7 @@ s - c "Server to Client Messege"
 ##[6] User log-out s - c
 <pre>
 {
-	"protocol": 6,
+	"service": 6,
 	"data": {
 		"timestamp": "",
 		"username": ""
